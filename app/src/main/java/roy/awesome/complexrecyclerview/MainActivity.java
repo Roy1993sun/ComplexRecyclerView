@@ -1,10 +1,12 @@
 package roy.awesome.complexrecyclerview;
 
+import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +32,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
+        final GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
 
 
         //mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mAdapter = new DemoAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) view.getLayoutParams();
+                int spanSize = params.getSpanSize();
+                int spanIndex = params.getSpanIndex();
+                outRect.top = 20;
+                if (spanSize != gridLayoutManager.getSpanCount()) {
+                    if (spanIndex == 1) {
+                        outRect.left = 10;
+                    } else {
+                        outRect.right = 10;
+                    }
+                }
+            }
+        });
 
         initData();
 
@@ -46,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
     private void initData() {
         List<DataModel> list = new ArrayList<>();
         for (int i = 0; i < 30; i++) {
-            int type = (int) ((Math.random() * 3) + 1);
+            //int type = (int) ((Math.random() * 3) + 1);
+            int type;
             if (i < 5 || i > 15 && i < 20) {
                 type = 1;
             } else if (i < 10 || i > 26) {
@@ -59,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
             data.avatarColor = colors[type - 1];
             data.type = type;
-            data.name = "name: " + i;
+            data.name = "name: " + type;
             data.content = "content:" + i;
             data.contentColor = colors[i % 3];
             list.add(data);

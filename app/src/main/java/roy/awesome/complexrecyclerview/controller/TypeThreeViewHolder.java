@@ -1,5 +1,6 @@
 package roy.awesome.complexrecyclerview.controller;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +26,8 @@ public class TypeThreeViewHolder extends AbsTypeViewHolder {
         mName = (TextView) itemView.findViewById(R.id.item_name);
         mContent = (TextView) itemView.findViewById(R.id.item_content);
         mContentImage = (ImageView) itemView.findViewById(R.id.contentImage);
+        itemView.setBackgroundColor(Color.YELLOW);
+
     }
     @Override
     public void bindHolder(DataModel model) {

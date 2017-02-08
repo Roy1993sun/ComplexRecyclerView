@@ -1,5 +1,6 @@
 package roy.awesome.complexrecyclerview.controller;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ public class TypeOneViewHolder extends AbsTypeViewHolder {
         super(itemView);
         mAvatar = (ImageView) itemView.findViewById(R.id.avatar);
         mName = (TextView) itemView.findViewById(R.id.item_name);
+        itemView.setBackgroundColor(Color.GREEN);
     }
 
     @Override
